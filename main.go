@@ -109,8 +109,7 @@ func individual(total int, repeat int) {
 
 func main() {
 	total := 200
-	repeat := 10
-	fmt.Print("Hello")
+	repeat := 300
 
 	handler := rpc.NewServer()
 	arith := new(Arith)
