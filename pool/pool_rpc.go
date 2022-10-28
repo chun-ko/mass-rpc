@@ -77,7 +77,7 @@ func (p *RpcConnPool) Get() (*rpcConn, error) {
 
 	p.numOpen++
 	p.mu.Unlock()
-
+	fmt.Print("Create new rpc connection\n")
 	newRpcConn, err := p.openNewRpcConn()
 
 	if err != nil {
@@ -115,6 +115,7 @@ func (p *RpcConnPool) openNewRpcConn() (*rpcConn, error) {
 		}
 
 		conn, err := net.Dial("tcp", addr)
+		fmt.Printf("Connect to %v", addr)
 		if err != nil {
 			log.Print("Error while initiating connection before tls", err)
 			return nil, err
@@ -122,6 +123,7 @@ func (p *RpcConnPool) openNewRpcConn() (*rpcConn, error) {
 		tlsConn := tls.Client(conn, conf)
 		c = rpc.NewClient(tlsConn)
 	} else {
+		fmt.Printf("Connect to %v", addr)
 		c, err = rpc.Dial("tcp", addr)
 		if err != nil {
 			return nil, err
